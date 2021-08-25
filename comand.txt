@@ -1,0 +1,92 @@
+mysql -h localhost -u root -p
+password: Infinite12345
+
+//Una universidad desea sistematizar su programa de monitorias, el cual es liderado por un coordinador de monitorias encargado de direccionar a los monitores.
+//De los monitores se desea almacenar: nombres, apellidos, programa académico, semestre, cédula, e información de contacto.
+//De las monitorias se quiere registrar: la materia, el monitor asignado, la fecha y el salón.
+//El software de monitorias se implementará en NODE con dos interfaces, un CRUD para la creación de monitores y un CRUD para la creación de monitorias.
+
+CREATE TABLE IF NOT EXISTS `monitor` (
+  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  doc int(11) NOT NULL,
+  email varchar(255) NOT NULL,
+  name varchar(255) NOT NULL,
+  lastname varchar(255) NOT NULL,
+  id_program INT(6) UNSIGNED,
+  semester int(11) NOT NULL,
+  contact varchar(255) NOT NULL,
+  FOREIGN KEY (id_program) REFERENCES PROGRAMA(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DELIMITER //
+create procedure create_monitor (
+  IN docP int,
+  IN emailP varchar(255),
+  IN nameP varchar(255),
+  IN lastnameP varchar(255),
+  IN id_programP int,
+  IN semesterP int,
+  IN contactP varchar(255))
+BEGIN
+insert into monitor (doc, email, name, lastname, idProgram, semester, contact) values (docP, emailP, nameP, lastnameP, idProgramP, semesterP, contactP);
+END//
+
+CREATE TABLE IF NOT EXISTS PROGRAMA (
+  id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  acaProgram VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create procedure create_program
+  (IN idP int,
+  IN acaProgramP varchar(255))
+ BEGIN
+insert into monitor (acaProgram) values (acaProgramP); 
+END//
+
+CREATE TABLE IF NOT EXISTS `monitor_monitoria`(
+    id int(11) UNSIGNED AUTO_INCREMENT,
+    monitor_id int(11) NOT NULL,
+    monitoria_id INT(11) UNSIGNED NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (monitor_id) REFERENCES monitor(id),
+    FOREIGN KEY (monitoria_id) REFERENCES monitoria(id)
+)//
+
+CREATE TABLE IF NOT EXISTS `monitoria` (
+  id int(11) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  materia varchar(255) NOT NULL,
+  fecha varchar(255) NOT NULL,
+  salon varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8//
+
+create procedure allMonitoria
+  ()
+ BEGIN
+select * from monitoria;
+END//
+
+call allMonitoria();
+
+create procedure create_monitor_monitoria
+  (IN idP int,
+  IN monitoria_idP int,
+  IN materiaP varchar(255),
+  IN salonP varchar(255),
+  IN fechaP varchar(255))
+
+ BEGIN
+insert into monitoria (materia, fecha, salon) values (materiaP, fechaP, salonP);
+
+insert into monitor_monitoria (monitor_id, monitoria_id) values (idP, monitoria_idP); 
+END//
+
+
+create procedure delete_monitor_monitoria
+  (IN idP int,
+  IN monitoria_idP int)
+
+ BEGIN
+ delete from monitoria where id=idP;
+ delete from monitor_monitoria where monitoria_id=monitoria_idP and monitor_id=idP;
+
+END//
