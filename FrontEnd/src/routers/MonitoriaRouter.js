@@ -6,11 +6,10 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 
-import Monitor from "../components/registrarMonitor";
 import Monitoria from "../components/registrarMonitoria";
 import NavBar from "../components/navBar";
 import MyResponsiveHeatMap from "../components/chart";
-import { AppContext } from "../Context/AppContext";
+import AppContext from "../Context/AppContext";
 const dato = [
   {
     monitor: "castellano arriueta",
@@ -20,18 +19,15 @@ const dato = [
 ];
 
 const AuthRouter = () => {
-  const { resources } = useContext(AppContext);
-  const [optionMonitoria, setoptionMonitoria] = useState("getMonitoria");
-  const [id, setId] = useState(0);
-  const [combo, setCombo] = useState(0);
+
 
   const dmt = (Data) => Data.map((a) => a);
 
   let match = useRouteMatch();
-  if (resources === undefined || resources["data"] === null) {
+ /* if (resources === undefined || resources["data"] === null) {
     return <>Cargando...</>;
   } else {
-    const pickMonitoria = resources["data"][optionMonitoria];
+    const pickMonitoria = resources["data"][optionMonitoria];*/
 
     return (
       <Router>
@@ -41,7 +37,7 @@ const AuthRouter = () => {
             <Route path={`${match.url}/ver`}>
               <div className="App">
                 <div className="test">
-                  <MyResponsiveHeatMap data={dato} monitoria={pickMonitoria} />
+                
                 </div>
               </div>
             </Route>
@@ -49,13 +45,14 @@ const AuthRouter = () => {
               <Monitoria />
             </Route>
             <Route path={`${match.url}/eliminar`}>
-              <Monitor />
+              <Monitoria />
             </Route>
           </Switch>
         </div>
       </Router>
     );
   }
-};
+
 
 export default AuthRouter;
+//  <MyResponsiveHeatMap data={dato} monitoria={pickMonitoria} />

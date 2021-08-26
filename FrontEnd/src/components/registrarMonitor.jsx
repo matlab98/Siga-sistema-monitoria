@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useFormik } from "formik";
 import Button from '@material-ui/core/Button';
@@ -8,7 +8,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from '@material-ui/core/styles';
+import AppContext from "../Context/AppContext";
+
 export default function RegistrarMonitor() {
+  const [monitoria, setMonitoria] = useState(AppContext);
+  const [submitted, setSubmitted] = useState(false);
   const validate = (values) => {
     const errors = {};
 
@@ -35,9 +39,29 @@ export default function RegistrarMonitor() {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 7));
+      console.log(values)
+
+        AppContext.create("monitor", values)
+        .then(response => {
+          setMonitoria({
+          });
+          setSubmitted(true);
+          console.log(response);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        
     },
   });
+
+
+console.log(monitoria)
+
+
+
+
+
   const useStyles = makeStyles((theme) => ({
     button: {
       margin: theme.spacing(1),
@@ -111,7 +135,7 @@ export default function RegistrarMonitor() {
               name="acaProgram"
               label="Programa acádemico"
               fullWidth
-              autoComplete="programa"
+              autoComplete="carrer"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.acaProgram}

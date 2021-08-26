@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import Monitor from '../components/registrarMonitor';
-import Monitoria from '../components/registrarMonitoria';
 import NavBar from '../components/navBar';
 
 const AuthRouter = () => {
@@ -22,7 +21,7 @@ const AuthRouter = () => {
           <Monitor />
         </Route>
         <Route path={`${match.url}/registrar`}>
-          <Monitoria />
+          <Monitor />
         </Route>
         <Route path={`${match.url}/eliminar`}>
           <Monitor />

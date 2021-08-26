@@ -2,13 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import App from './routers/App';
-import AppState from './Context/AppContext';
+import * as service from "./service";
 
 ReactDOM.render(
-  <AppState>
+
   <React.StrictMode>
     <App />
-  </React.StrictMode>
-  </AppState>,
+  </React.StrictMode>,
+
   document.getElementById('root')
 );
+service.unregister();
