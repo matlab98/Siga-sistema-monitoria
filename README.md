@@ -17,7 +17,6 @@ Diseñe varios procedimientos almacenados para garantizar un rendimiento óptimo
 
 Para ejecutar esta aplicación debe seguir los siguientes pasos cuidadosamente:
 
-
 1. Debe acceder a la carpeta "BackEnd"
 2. Ejecutar el comando "npm i", inmediatamente se instalarán las librerías que use para desarrollar el BackEnd
 3. Digitar el comando "node index.js, e inmediatamente el BackEnd se ejecutará.
