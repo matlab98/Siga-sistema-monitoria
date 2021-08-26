@@ -1,9 +1,48 @@
 import React from "react";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
+import { DataGrid } from '@material-ui/data-grid';
 
-const MyResponsiveHeatMap = ({ data /* see data tab */ }) => (
+const columns = [
+  {
+    field: 'id',
+    hide: true,
+    identity: true
+},
+  {
+    field: 'Monitor',
+    headerName: 'Nombre completo',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'Asignatura',
+    headerName: 'Asignatura',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'salon',
+    headerName: 'Salon',
+    type: 'number',
+    width: 110,
+    editable: true,
+  },  
+  {
+    field: 'fecha',
+    headerName: 'Fecha',
+    width: 110,
+    editable: true,
+  },
+ 
+];
 
-  <ResponsiveHeatMap
+const rows = [
+  { "id": 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+
+];
+const MyResponsiveHeatMap = ( {data, monitoria}) => (
+<div style={{ height: 400, width: '100%' }}>
+<ResponsiveHeatMap
     data={data}
     keys={[
       "Lunes",
@@ -13,7 +52,7 @@ const MyResponsiveHeatMap = ({ data /* see data tab */ }) => (
       "Viernes",
       "Sábado"
     ]}
-    indexBy="country"
+    indexBy="monitor"
     margin={{ top: 100, right: 60, bottom: 60, left: 60 }}
     forceSquare={true}
     axisTop={{
@@ -31,7 +70,7 @@ const MyResponsiveHeatMap = ({ data /* see data tab */ }) => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: "country",
+      legend: "monitor",
       legendPosition: "middle",
       legendOffset: -40
     }}
@@ -56,6 +95,50 @@ const MyResponsiveHeatMap = ({ data /* see data tab */ }) => (
     hoverTarget="cell"
     cellHoverOthersOpacity={0.25}
   />
+
+<table className="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Monitor</th>
+      <th scope="col">Asignatura</th>
+      <th scope="col">Salon</th>
+      <th scope="col">Fecha</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {monitoria[0].map((a) => 
+  {return (
+    <tr>
+      <td>{a["monitor"]}</td>
+      {console.log(a["monitor"])}
+      <td>{a["materia"]}</td>
+      <td>{a["salon"]}</td>
+      <td>{a["fecha"]}</td>
+    </tr>
+)
+  })}
+
+
+  </tbody>
+</table>
+    </div>
 );
 
 export default MyResponsiveHeatMap;
+
+/**
+ * import * as React from 'react';
+
+
+
+export default function DataTable() {
+  return (
+    
+  );
+}
+
+
+
+  
+ */
