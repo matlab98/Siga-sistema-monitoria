@@ -37,7 +37,16 @@ const AppState = ({ children }) => {
       data: {
         getMonitoria: await getData("allMonitoria"),
         getMonitor: await getData("allMonitor"),
-        
+        getAsignatura: await getData("allAsignatura"),
+        postMonitoria: await postData("guajolotas"),
+        postMonitor: await postData("bebidas"),
+        postAsignatura: await postData("bebidas"),
+        putMonitoria: await putData("guajolotas"),
+        putMonitor: await putData("bebidas"),
+        putAsignatura: await putData("bebidas"),
+        delMonitoria: await deleteData("guajolotas"),
+        delMonitor: await deleteData("bebidas"),
+        delAsignatura: await deleteData("bebidas"),
       },
       loading: false,
     });
