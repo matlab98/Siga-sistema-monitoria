@@ -1,21 +1,25 @@
 const sql = require("../db/db.js");
 
 // constructor
-const Monitoria = function(Monitoria) {
-  this.email = Monitoria.email;
-  this.name = Monitoria.name;
+// constructor
+const Monitoria = function (Monitoria) {
+  this.idMonitor = Monitor.idMonitor;
+  this.idMonitoria = Monitor.idMonitoria;
+  this.subject = Monitor.subject;
+  this.salon = Monitor.salon;
+  this.fecha = Monitor.fecha;
 };
-/*
-Monitoria.create = (newMonitoria, result) => {
-  sql.query("INSERT INTO Monitorias SET ?", newMonitoria, (err, res) => {
+
+Monitoria.create = (idMonitor, idMonitoria, subject, salon, fecha, result) => {
+  sql.query("call create_monitor_monitoria (?,?,?,?,?)", [idMonitor, idMonitoria, subject, salon, fecha], (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created Monitoria: ", { id: res.insertId, ...newMonitoria });
-    result(null, { id: res.insertId, ...newMonitoria });
+    console.log("created Monitoria: ", { id: res.insertId, ...idMonitor, ...idMonitoria });
+    result(null, { id: res.insertId, ...idMonitor, ...idMonitoria });
   });
 };
 
@@ -36,7 +40,7 @@ Monitoria.findById = (MonitoriaId, result) => {
     // not found Monitoria with the id
     result({ kind: "not_found" }, null);
   });
-};*/
+};
 
 Monitoria.getAll = result => {
   sql.query("call allMonitoria()", (err, res) => {
@@ -50,11 +54,11 @@ Monitoria.getAll = result => {
     result(null, res);
   });
 };
-/*
+
 Monitoria.updateById = (id, Monitoria, result) => {
   sql.query(
-    "UPDATE onitoria SET email = ?, name = ?, active = ? WHERE id = ?",
-    [Monitoria.email, Monitoria.name, Monitoria.active, id],
+    "update_monitor_monitoria (?, ?, ?, ?, ?)",
+    [Monitoria.idMonitoria, Monitoria.idMonitor, Monitoria.subject, Monitoria.salon, Monitoria.fecha, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -68,7 +72,7 @@ Monitoria.updateById = (id, Monitoria, result) => {
         return;
       }
 
-      console.log("updated Monitoria: ", { id: id, ...Monitoria });
+      console.log("Actualizada monitoria: ", { id: id, ...Monitoria });
       result(null, { id: id, ...Monitoria });
     }
   );
@@ -88,22 +92,10 @@ Monitoria.remove = (id, result) => {
       return;
     }
 
-    console.log("deleted Monitoria with id: ", id);
+    console.log("Monitoria eliminada id: ", id);
     result(null, res);
   });
 };
 
-Monitoria.removeAll = result => {
-  sql.query("DELETE FROM Monitorias", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    console.log(`deleted ${res.affectedRows} Monitorias`);
-    result(null, res);
-  });
-};*/
 
 module.exports = Monitoria;

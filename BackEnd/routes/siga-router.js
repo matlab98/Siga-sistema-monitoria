@@ -7,9 +7,6 @@ module.exports = app => {
     // Retrieve all monitors
     app.get("/allMonitor", sistema.findAll);
   
-    // Retrieve a single monitor with monitorId
-    app.get("/monitor/:monitorId", sistema.findOne);
-  
     // Update a Monitor with monitorId
     app.put("/monitor/:monitorId", sistema.update);
   

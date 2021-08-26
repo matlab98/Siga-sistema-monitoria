@@ -1,20 +1,73 @@
-import { useEffect, useState } from 'react';
-const useResources = () => {
-  const song = 'http://192.168.1.5:666/api/v1/resources/music/all';
-  const [resources, setResources] = useState();
-  useEffect(() => {
-    setResources({ loading: true });
-    fetch(song, {
-      method: 'GET',
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setResources({ loading: false, data: data.song});
-      })
-      .catch((error) => error);
-  }, [setResources]);
+import axios from "axios-jsonp-pro";
+import { createContext, useState, useEffect, Children } from "react";
 
-  return resources;
+const AppState = ({ children }) => {
+  const [resources, setResources] = useState({
+    data: null,
+    loading: true,
+  });
+
+  const getResources = async () => {
+    const getData = async (resource) => {
+      const { data } = await axios.get(
+        `http://0.0.0.0:3001/${resource}`
+      );
+      return data;
+    };
+    const postData = async (resource) => {
+      const { data } = await axios.post(
+        `http://0.0.0.0:3001/${resource}`
+      );
+      return data;
+    };
+    const putData = async (resource) => {
+      const { data } = await axios.put(
+        `http://0.0.0.0:3001/${resource}`
+      );
+      return data;
+    };
+    const deleteData = async (resource) => {
+      const { data } = await axios.delete(
+        `http://0.0.0.0:3001/${resource}`
+      );
+      return data;
+    };
+
+    setResources({
+      data: {
+        getMonitoria: await getData("allMonitoria"),
+        getMonitor: await getData("allMonitor"),
+        getAsignatura: await getData("allAsignatura"),
+        postMonitoria: await postData("guajolotas"),
+        postMonitor: await postData("bebidas"),
+        postAsignatura: await postData("bebidas"),
+        putMonitoria: await putData("guajolotas"),
+        putMonitor: await putData("bebidas"),
+        putAsignatura: await putData("bebidas"),
+        delMonitoria: await deleteData("guajolotas"),
+        delMonitor: await deleteData("bebidas"),
+        delAsignatura: await deleteData("bebidas"),
+      },
+      loading: false,
+    });
+  };
+
+  useEffect(() => {
+    getResources();
+  }, []);
+
+  return (
+    <AppContext.Provider
+      value={{
+        resources,
+        getResources,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };
 
-export default useResources;
+export const AppContext = createContext();
+
+export default AppState;

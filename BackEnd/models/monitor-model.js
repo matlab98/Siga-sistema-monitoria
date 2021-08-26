@@ -1,26 +1,43 @@
 const sql = require("../db/db");
 
 // constructor
-const Monitor = function(Monitor) {
+const Monitor = function (Monitor) {
+  this.doc = Monitor.doc;
   this.email = Monitor.email;
   this.name = Monitor.name;
+  this.lastName = Monitor.lastName;
+  this.id_program = Monitor.id_program;
+  this.semester = Monitor.semester;
+  this.contact = Monitor.contact;
 };
 
 Monitor.create = (newMonitor, result) => {
-  sql.query("INSERT INTO Monitors SET ?", newMonitor, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
+  sql.query(
+    "call create_monitor (?,?,?,?,?,?,?)",
+    [
+      newMonitor.doc,
+      newMonitor.email,
+      newMonitor.name,
+      newMonitor.lastName,
+      newMonitor.id_program,
+      newMonitor.semester,
+      newMonitor.contact,
+    ],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
 
-    console.log("created Monitor: ", { id: res.insertId, ...newMonitor });
-    result(null, { id: res.insertId, ...newMonitor });
-  });
+      console.log("created Monitor: ", { id: res.insertId, ...newMonitor });
+      result(null, { id: res.insertId, ...newMonitor });
+    }
+  );
 };
 
 Monitor.findById = (MonitorId, result) => {
-  sql.query(`SELECT * FROM Monitors WHERE id = ${MonitorId}`, (err, res) => {
+  sql.query(`SELECT * FROM monitor WHERE id = ${MonitorId}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
@@ -38,8 +55,8 @@ Monitor.findById = (MonitorId, result) => {
   });
 };
 
-Monitor.getAll = result => {
-  sql.query("SELECT * FROM Monitors", (err, res) => {
+Monitor.getAll = (result) => {
+  sql.query("call allMonitor()", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -53,8 +70,8 @@ Monitor.getAll = result => {
 
 Monitor.updateById = (id, Monitor, result) => {
   sql.query(
-    "UPDATE Monitors SET email = ?, name = ?, active = ? WHERE id = ?",
-    [Monitor.email, Monitor.name, Monitor.active, id],
+    "UPDATE monitor SET doc = ?, email = ?, name = ?, lastname = ?, id_program = ?, semester = ?, contact = ? WHERE id = ?",
+    [Monitor.doc, Monitor.email, Monitor.name, Monitor.lastName, Monitor.id_program, Monitor.semester, Monitor.contact, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -75,7 +92,7 @@ Monitor.updateById = (id, Monitor, result) => {
 };
 
 Monitor.remove = (id, result) => {
-  sql.query("DELETE FROM Monitors WHERE id = ?", id, (err, res) => {
+  sql.query("DELETE FROM monitor WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
@@ -93,8 +110,8 @@ Monitor.remove = (id, result) => {
   });
 };
 
-Monitor.removeAll = result => {
-  sql.query("DELETE FROM Monitors", (err, res) => {
+Monitor.removeAll = (result) => {
+  sql.query("DELETE FROM monitor", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

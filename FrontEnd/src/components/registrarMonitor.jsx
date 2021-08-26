@@ -1,15 +1,13 @@
 import React from "react";
 
-import { Formik, useFormik } from "formik";
-import * as Yup from "yup";
-import validator from "validator";
-
+import { useFormik } from "formik";
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-
+import { makeStyles } from '@material-ui/core/styles';
 export default function RegistrarMonitor() {
   const validate = (values) => {
     const errors = {};
@@ -40,8 +38,14 @@ export default function RegistrarMonitor() {
       alert(JSON.stringify(values, null, 7));
     },
   });
+  const useStyles = makeStyles((theme) => ({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }));
 
-  return (
+  const classes = useStyles();
+  return (<div className="container">
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Registrar monitor
@@ -140,40 +144,27 @@ export default function RegistrarMonitor() {
             />
           </Grid>
         </Grid>
-        <button type="submit" class="btn btn-primary">Continuar</button>
-        <button type="" class="btn btn-danger">Cancelar</button>
+        <Grid item xs={12} sm={6}>
+       
+        <Button
+        variant="contained"
+        color="primary"
+        type="submit"
+        className={classes.button}
+        endIcon={<SaveIcon />}
+      >
+        Continuar
+      </Button>
+        <Button
+        variant="contained"
+        color="secondary"
+        className={classes.button}
+        startIcon={<DeleteIcon />
+        }
+      >
+        Cancelar
+      </Button></Grid>
       </form>
-    </React.Fragment>
+    </React.Fragment></div>
   );
 }
-
-/**
- * import { ResponsiveTimeRange } from "@nivo/calendar";
- * const MyResponsiveTimeRange = ({ data  }) => (
-    <ResponsiveTimeRange
-        data={data}
-        from="2018-04-01"
-        to="2018-08-12"
-        emptyColor="#eeeeee"
-        colors={[ '#61cdbb', '#97e3d5', '#e8c1a0', '#f47560' ]}
-        margin={{ top: 40, right: 40, bottom: 100, left: 40 }}
-        dayBorderWidth={2}
-        dayBorderColor="#ffffff"
-        legends={[
-            {
-                anchor: 'bottom-right',
-                direction: 'row',
-                justify: false,
-                itemCount: 4,
-                itemWidth: 42,
-                itemHeight: 36,
-                itemsSpacing: 14,
-                itemDirection: 'right-to-left',
-                translateX: -85,
-                translateY: -240,
-                symbolSize: 20
-            }
-        ]}
-    />
-)
- */
