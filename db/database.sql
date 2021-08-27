@@ -99,8 +99,12 @@ END
 create procedure allMonitoria
   ()
 BEGIN
-    select *
-    from monitoria;
+select monm.id, concat(m.name,' ',m.lastname) as monitor, mon.salon, mon.materia, mon.fecha
+    from monitoria mon 
+    INNER JOIN monitor_monitoria monm 
+    ON mon.id = monm.monitoria_id
+    INNER JOIN monitor m 
+    ON m.id = monm.monitor_id;
 END
 //
 

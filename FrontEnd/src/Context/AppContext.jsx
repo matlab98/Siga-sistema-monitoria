@@ -9,7 +9,7 @@ const create = (title, data) => {
   return http.post(`/${title}?doc=${data.cedula}&email=${data.email}&name=${data.name}&lastName=${data.lastname}&id_program=${data.acaProgram}&semester=${data.semester}&contact=${data.contacto}`);
 };
 const update = (title, id, data) => {
-  return http.put(`/${title}/${id}`, data);
+  return http.put(`/${title}/${id}?doc=${data.cedula}&email=${data.email}&name=${data.name}&lastName=${data.lastname}&id_program=${data.acaProgram}&semester=${data.semester}&contact=${data.contacto}`);
 };
 
 const remove = (title, id) => {
@@ -21,7 +21,7 @@ const removeAll = (title) => {
 };
 
 const findByTitle = (title, dato) => {
-  return http.get(`/${title}?title=${dato}`);
+  return http.get(`/${title}?id=${dato}`);
 };
 export default {
   getAll,
