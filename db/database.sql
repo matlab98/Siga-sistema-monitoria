@@ -173,3 +173,4 @@ UPDATE monitor_monitoria SET monitor_id=idP, monitoria_id=monitoria_idP WHERE id
 END//
 
 call update_monitor_monitoria (2, 1, "Axul", "A45", "Jueves")
+
